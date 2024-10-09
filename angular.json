@@ -146,6 +146,5 @@
     }},
   "cli": {
     "analytics": "eb0f9acc-0e6d-4a7e-a742-bae813d1753e"
-  },
-  "defaultProject": "@agencycoda/mia-table"
+  }
 }
