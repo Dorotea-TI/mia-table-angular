@@ -3,24 +3,21 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MiaTableModule } from 'projects/agencycoda/mia-table/src/public-api';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomOneColumnComponent } from './custom-one-column/custom-one-column.component';
+import { MiaTableModule } from 'projects/doroteati/mia-table/src/public-api';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CustomOneColumnComponent
-  ],
+  declarations: [AppComponent, CustomOneColumnComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    MiaTableModule
+    MiaTableModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,4 +1,3 @@
-import { MiaCoreModule } from '@agencycoda/mia-core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -16,12 +15,22 @@ import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
+import {
+  MatMomentDateModule,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
 
 /** Others libraries */
-import { MiaLoadingModule } from '@agencycoda/mia-loading';
 import { StorageModule } from '@ngx-pwa/local-storage';
+import { MiaCoreModule } from '@doroteati/mia-core';
+import { MiaLoadingModule } from '@doroteati/mia-loading';
 
 /** Components */
 import { MiaTableComponent } from './components/mia-table/mia-table.component';
@@ -114,12 +123,19 @@ import { ArrayColumnComponent } from './columns/array-column/array-column.compon
 
     MiaEditColumnsComponent,
 
-    MiaInfiniteScrollServiceComponent
+    MiaInfiniteScrollServiceComponent,
   ],
   providers: [
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
     { provide: MAT_DATE_LOCALE, useValue: 'en-Us' },
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true, strict: true} },
-  ]
+    {
+      provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+      useValue: { useUtc: true, strict: true },
+    },
+  ],
 })
-export class MiaTableModule { }
+export class MiaTableModule {}
