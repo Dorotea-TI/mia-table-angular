@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
-import { StorageMap } from '@ngx-pwa/local-storage';
 import { MiaTableConfig } from '../../entities/mia-table-config';
 import { MiaTableComponent, MIA_TABLE_KEY_STORAGE_COLUMNS } from '../mia-table/mia-table.component';
+import { StorageMap } from '@ngx-pwa/local-storage';
 
 @Component({
   selector: 'mia-edit-columns',

@@ -1,20 +1,24 @@
-import { MiaBaseCrudHttpService, MiaQuery, MiaDataResultService } from '@agencycoda/mia-core';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { BaseEditableColumnComponent } from '../base-editable-column.component';
+import {
+  MiaBaseCrudHttpService,
+  MiaDataResultService,
+  MiaQuery,
+} from '@doroteati/mia-core';
 
 @Component({
   selector: 'mia-select-service-editable-column',
   templateUrl: './select-service-editable-column.component.html',
-  styleUrls: ['./select-service-editable-column.component.scss']
+  styleUrls: ['./select-service-editable-column.component.scss'],
 })
-export class SelectServiceEditableColumnComponent extends BaseEditableColumnComponent implements OnInit {
-
+export class SelectServiceEditableColumnComponent
+  extends BaseEditableColumnComponent
+  implements OnInit
+{
   items: Array<any> = [];
 
-  constructor(
-    protected dataResultService: MiaDataResultService
-  ) {
+  constructor(protected dataResultService: MiaDataResultService) {
     super();
   }
 
@@ -24,7 +28,7 @@ export class SelectServiceEditableColumnComponent extends BaseEditableColumnComp
   }
 
   getDisplayItem(item: any, key: string) {
-    if(key == undefined){
+    if (key == undefined) {
       return '';
     }
 
@@ -34,7 +38,7 @@ export class SelectServiceEditableColumnComponent extends BaseEditableColumnComp
 
     let valueFinal = item;
     for (const keyObj of key!) {
-      if(valueFinal[keyObj] == undefined){
+      if (valueFinal[keyObj] == undefined) {
         return '';
       }
       valueFinal = valueFinal[keyObj];
@@ -45,7 +49,7 @@ export class SelectServiceEditableColumnComponent extends BaseEditableColumnComp
   loadItems() {
     // Verify if has extra params
     let extraParams = this.column.extra.extraParams;
-    if(extraParams == undefined){
+    if (extraParams == undefined) {
       extraParams = {};
     }
 
@@ -54,15 +58,21 @@ export class SelectServiceEditableColumnComponent extends BaseEditableColumnComp
     let service: MiaBaseCrudHttpService<any> = this.column.extra.service;
 
     let dataResultId = this.column.extra?.dataResultId;
-    if(dataResultId == undefined){
+    if (dataResultId == undefined) {
       dataResultId = this.column.key + '-items';
     }
 
-    this.dataResultService.execute<Array<any>>(dataResultId, service.listOb(query).pipe(map(re => {
-      return re.data;
-     }))).subscribe(result => {
-       this.items = result;
-    });
+    this.dataResultService
+      .execute<Array<any>>(
+        dataResultId,
+        service.listOb(query).pipe(
+          map((re) => {
+            return re.data;
+          })
+        )
+      )
+      .subscribe((result) => {
+        this.items = result;
+      });
   }
 }
-

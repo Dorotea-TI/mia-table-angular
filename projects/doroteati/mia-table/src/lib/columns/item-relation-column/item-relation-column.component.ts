@@ -1,14 +1,16 @@
-import { MiaBaseCrudHttpService, MiaQuery } from '@agencycoda/mia-core';
 import { Component, OnInit } from '@angular/core';
 import { BaseColumnComponent } from '../base-column.component';
+import { MiaBaseCrudHttpService, MiaQuery } from '@doroteati/mia-core';
 
 @Component({
   selector: 'mia-item-relation-column',
   templateUrl: './item-relation-column.component.html',
-  styleUrls: ['./item-relation-column.component.scss']
+  styleUrls: ['./item-relation-column.component.scss'],
 })
-export class ItemRelationColumnComponent extends BaseColumnComponent implements OnInit {
-
+export class ItemRelationColumnComponent
+  extends BaseColumnComponent
+  implements OnInit
+{
   constructor() {
     super();
   }
@@ -18,13 +20,13 @@ export class ItemRelationColumnComponent extends BaseColumnComponent implements 
   }
 
   getTitle(): string {
-    if(this.column.extra.options == undefined){
+    if (this.column.extra.options == undefined) {
       return 'loading...';
     }
 
     let value = this.getFieldValue();
     for (const item of this.column.extra.options) {
-      if(item[this.column.extra.field_relation_id] == value){
+      if (item[this.column.extra.field_relation_id] == value) {
         return item[this.column.extra.field_display];
       }
     }
@@ -32,19 +34,22 @@ export class ItemRelationColumnComponent extends BaseColumnComponent implements 
   }
 
   loadItems() {
-    if(this.column.extra.options != undefined || this.column.extra.isSearching){
+    if (
+      this.column.extra.options != undefined ||
+      this.column.extra.isSearching
+    ) {
       return;
     }
 
     this.column.extra.isSearching = true;
 
     let query = this.column.extra.query;
-    if(query == undefined){
+    if (query == undefined) {
       query = new MiaQuery();
     }
 
     let service: MiaBaseCrudHttpService<any> = this.column.extra.service;
-    service.listOb(query).subscribe(result => {
+    service.listOb(query).subscribe((result) => {
       this.column.extra.options = result.data;
     });
   }
