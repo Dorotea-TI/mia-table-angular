@@ -1,6 +1,11 @@
+# Dorotea
+
+Libreria migrada a la version 14 de Angular
+migrada por Heider Hernandez [GitHub](https://github.com/HeiderHDev)
+
 # MiaTableAngular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.
 
 ## Development server
 
