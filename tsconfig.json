@@ -15,14 +15,11 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2018", "dom"],
     "paths": {
-      "@agencycoda/mia-table": [
-        "dist/agencycoda/mia-table/agencycoda-mia-table",
-        "dist/agencycoda/mia-table"
+      "@doroteati/mia-table": [
+        "dist/doroteati/mia-table/doroteati-mia-table",
+        "dist/doroteati/mia-table"
       ]
     }
   },
