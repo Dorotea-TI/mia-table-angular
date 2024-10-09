@@ -1,13 +1,13 @@
 {
   "name": "@doroteati/mia-table",
-  "version": "14.0.0",
+  "version": "14.0.1",
   "peerDependencies": {
     "@angular/common": ">=14.0.0",
     "@angular/core": ">=14.0.0",
     "@angular/cdk": ">=14.0.0",
     "@angular/material": ">=14.0.0",
     "@angular/material-moment-adapter": ">=14.0.0",
-    "@doroteati/mia-core": ">=14.0.3",
+    "@doroteati/mia-core": ">=14.0.2",
     "@doroteati/mia-loading": ">=14.0.0",
     "@ngx-pwa/local-storage": ">=13.0.5"
   },
