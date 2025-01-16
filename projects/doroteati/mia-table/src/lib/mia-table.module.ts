@@ -101,13 +101,13 @@ import { ArrayColumnComponent } from './columns/array-column/array-column.compon
     MiaLoadingModule,
 
     // Angular Material
+    MatChipsModule,
     MatIconModule,
     MatButtonModule,
     MatTableModule,
     MatCheckboxModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatChipsModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
