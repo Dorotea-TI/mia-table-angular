@@ -1,25 +1,22 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { TableAnimation } from '../../animations/table-animation';
 import { MiaTableEditableConfig } from '../../entities/mia-table-editable-config';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'mia-table-editable',
   templateUrl: './mia-table-editable.component.html',
   styleUrls: ['./mia-table-editable.component.scss'],
-  animations: [
-    TableAnimation.componentAnimation
-  ]
+  animations: [TableAnimation.componentAnimation],
 })
 export class MiaTableEditableComponent implements OnInit {
-
   @Input() config = new MiaTableEditableConfig();
   @Input() dataItems?: Array<any>;
 
   displayColumns: Array<String> = [];
   dataSource = new MatTableDataSource<any>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.processDisplayColumns();
@@ -33,7 +30,7 @@ export class MiaTableEditableComponent implements OnInit {
 
   onRemove(item: any) {
     let index = this.dataItems?.indexOf(item);
-    if(index != undefined && index != -1){
+    if (index != undefined && index != -1) {
       this.dataItems?.splice(index, 1);
     }
     this.processData();
@@ -46,7 +43,7 @@ export class MiaTableEditableComponent implements OnInit {
   processDisplayColumns() {
     this.displayColumns = new Array<String>();
     for (const column of this.config.columns) {
-        this.displayColumns.push(column.key);
+      this.displayColumns.push(column.key);
     }
   }
 

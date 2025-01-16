@@ -1,18 +1,11 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewEncapsulation,
-} from '@angular/core';
-import { TableAnimation } from '../../animations/table-animation';
-import { MiaTableConfig } from '../../entities/mia-table-config';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { MiaPagination } from '@doroteati/mia-core';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { Observable } from 'rxjs';
-import { MiaPagination } from '@doroteati/mia-core';
+import { TableAnimation } from '../../animations/table-animation';
+import { MiaTableConfig } from '../../entities/mia-table-config';
 
 export const MIA_TABLE_KEY_STORAGE_COLUMNS = 'mia_table.columns_';
 
