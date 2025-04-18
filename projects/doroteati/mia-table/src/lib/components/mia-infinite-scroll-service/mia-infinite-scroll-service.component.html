@@ -1,7 +1,9 @@
 <div class="mia-infinite-scroll-container">
-    <ng-container *ngFor="let item of dataItems.data">
-        Item LOADED!!
-    </ng-container>
-    
-    <div *ngIf="isLoading || isFirstLoad">Loading...</div>
+  @for (item of dataItems.data; track item) {
+    Item LOADED!!
+  }
+
+  @if (isLoading || isFirstLoad) {
+    <div>Loading...</div>
+  }
 </div>

@@ -1,4 +1,5 @@
-<ng-container *ngIf="column.extra && column.extra.conditional_field && getConditionalFieldValue() != ''; else defaultValue">
-    {{ getConditionalFieldValue() }}
-</ng-container>
-<ng-template #defaultValue>{{ getFieldValue() }}</ng-template>
+@if (column.extra && column.extra.conditional_field && getConditionalFieldValue() != '') {
+  {{ getConditionalFieldValue() }}
+} @else {
+  {{ getFieldValue() }}
+}

@@ -1,1 +1,1 @@
-<img *ngIf="getFieldValue() != '' && getFieldValue() != undefined" [src]="getFieldValue()" />
+@if (getFieldValue() != '' && getFieldValue() != undefined) {<img [src]="getFieldValue()" />}

@@ -1,6 +1,10 @@
-<button *ngIf="actions.length > 0" mat-icon-button [matMenuTriggerFor]="actionsMenu" (click)="$event.stopPropagation()"><mat-icon>more_vert</mat-icon></button>
+@if (actions.length > 0) {
+  <button mat-icon-button [matMenuTriggerFor]="actionsMenu" (click)="$event.stopPropagation()"><mat-icon>more_vert</mat-icon></button>
+}
 <mat-menu #actionsMenu="matMenu">
-    <button mat-menu-item *ngFor="let button of actions" (click)="clickButton(button, $event)">
-        <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
+  @for (button of actions; track button) {
+    <button mat-menu-item (click)="clickButton(button, $event)">
+      <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
     </button>
+  }
 </mat-menu>

@@ -1,10 +1,16 @@
 <div class="user-avatar-component">
-    <div class="avatar" *ngIf="getPhoto() != ''">
-        <img mat-card-avatar [src]="getPhoto()" alt="{{ getFullname() }}" class="cover-image" onerror="this.src='/assets/img/user-avatar-empty.svg';">
+  @if (getPhoto() != '') {
+    <div class="avatar">
+      <img mat-card-avatar [src]="getPhoto()" alt="{{ getFullname() }}" class="cover-image" onerror="this.src='/assets/img/user-avatar-empty.svg';">
     </div>
-    <div class="texts">
-        <div class="user"> {{ getFullname() }} </div>
-        <div class="body-2" *ngIf="getSubtitle() != ''"> {{ getSubtitle() }} </div>
-    </div>
-    <div class="check" *ngIf="column.extra?.field_is_online && isOnline()"><mat-icon>check</mat-icon></div>
+  }
+  <div class="texts">
+    <div class="user"> {{ getFullname() }} </div>
+    @if (getSubtitle() != '') {
+      <div class="body-2"> {{ getSubtitle() }} </div>
+    }
+  </div>
+  @if (column.extra?.field_is_online && isOnline()) {
+    <div class="check"><mat-icon>check</mat-icon></div>
+  }
 </div>
