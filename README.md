@@ -42,3 +42,43 @@ Puedes cambiar el backend local así:
 # PowerShell
 $env:LOCAL_API_BASE="http://localhost:8080"; npm run serve:ssr:example
 ```
+
+## Publicar `@doroteati/mia-table` en npm
+
+Importante: no publiques desde la raíz del workspace (`mia-table-angular`), porque ese `package.json` está marcado como `private: true`.
+
+### 1) Login en npm
+
+```bash
+npm login
+npm whoami
+```
+
+### 2) Build de la librería
+
+```bash
+npx ng build --project @doroteati/mia-table --configuration production
+```
+
+### 3) Publicar desde la carpeta correcta
+
+```bash
+cd dist/doroteati/mia-table
+npm publish --access=public
+```
+
+### 4) Si falla por versión existente
+
+```bash
+cd ../../../projects/doroteati/mia-table
+npm version patch --no-git-tag-version
+cd ../../../dist/doroteati/mia-table
+npm publish --access=public
+```
+
+### Errores comunes
+
+- `EPRIVATE This package has been marked as private`
+  - Estás publicando desde la raíz del repo. Ve a `dist/doroteati/mia-table`.
+- `Access token expired or revoked`
+  - Ejecuta `npm login` de nuevo.

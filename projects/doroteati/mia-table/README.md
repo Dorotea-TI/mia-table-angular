@@ -1,25 +1,157 @@
-# MiaTable
+# @doroteati/mia-table
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.0.
+Libreria Angular 21 para tablas de datos con:
 
-## Code scaffolding
+- `mia-table` (tabla paginada con columnas configurables)
+- `mia-table-editable` (tabla editable por fila)
+- `mia-edit-columns` (selector de columnas visibles)
+- `mia-infinite-scroll-service` (carga incremental por scroll)
 
-Run `ng generate component component-name --project mia-table` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project mia-table`.
+## Requisitos
 
-> Note: Don't forget to add `--project mia-table` or else it will be added to the default project in your `angular.json` file.
+- Angular `>=21`
+- Angular Material `>=21`
+- `@doroteati/mia-core`
+- `@doroteati/mia-loading`
+- `@ngx-pwa/local-storage`
 
-## Build
+## Instalacion
 
-Run `ng build mia-table` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+npm i @doroteati/mia-table @doroteati/mia-core @doroteati/mia-loading @ngx-pwa/local-storage @angular/material @angular/material-moment-adapter
+```
 
-## Publishing
+## Importante sobre el modulo
 
-After building your library with `ng build mia-table`, go to the dist folder `cd dist/mia-table` and run `npm publish`.
+Los componentes de esta libreria no son `standalone`; debes importar `MiaTableModule`.
 
-## Running unit tests
+## Uso en Angular 21 (app Standalone)
 
-Run `ng test mia-table` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Opcion A: importar `MiaTableModule` en tu componente standalone
 
-## Further help
+```ts
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MiaTableModule } from '@doroteati/mia-table';
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+@Component({
+  selector: 'app-auctions',
+  standalone: true,
+  imports: [CommonModule, MiaTableModule],
+  template: `
+    <mia-table [config]="tableConfig"></mia-table>
+  `,
+})
+export class AuctionsComponent {
+  tableConfig = new MiaTableConfig();
+}
+```
+
+### Opcion B: registrar el modulo globalmente en `bootstrapApplication`
+
+```ts
+import { bootstrapApplication } from '@angular/platform-browser';
+import { importProvidersFrom } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MiaTableModule } from '@doroteati/mia-table';
+import { AppComponent } from './app/app.component';
+
+bootstrapApplication(AppComponent, {
+  providers: [importProvidersFrom(BrowserAnimationsModule, MiaTableModule)],
+});
+```
+
+## Uso con apps basadas en `NgModule`
+
+```ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MiaTableModule } from '@doroteati/mia-table';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, BrowserAnimationsModule, MiaTableModule],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+## Ejemplo minimo de `mia-table`
+
+```ts
+import { MiaTableConfig, MiaColumn } from '@doroteati/mia-table';
+import { MiaQuery } from '@doroteati/mia-core';
+
+tableConfig = new MiaTableConfig();
+
+ngOnInit() {
+  this.tableConfig.id = 'auctions-table';
+  this.tableConfig.service = this.auctionService; // debe implementar list/listOb
+  this.tableConfig.query = new MiaQuery();
+  this.tableConfig.query.itemPerPage = 25;
+  this.tableConfig.columns = [
+    { key: 'id', type: 'string', title: 'ID', field_key: 'id' },
+    { key: 'title', type: 'string', title: 'Titulo', field_key: 'title' },
+    { key: 'address', type: 'text', title: 'Direccion', field_key: 'address' },
+    { key: 'status', type: 'status', title: 'Estado', field_key: 'status', extra: {
+      options: [
+        { value: 1, title: 'Activo', color: 'success' },
+        { value: 9, title: 'No Activo', color: 'error' },
+      ],
+    }},
+  ];
+}
+```
+
+Template:
+
+```html
+<mia-edit-columns [config]="tableConfig" [miaTable]="tableComp">
+  <button>Editar columnas</button>
+</mia-edit-columns>
+
+<mia-table #tableComp [config]="tableConfig"></mia-table>
+```
+
+## Contrato del servicio para `mia-table`
+
+`mia-table` consume paginacion tipo `MiaPagination`.
+Tambien soporta respuesta envuelta como:
+
+```json
+{
+  "success": true,
+  "response": {
+    "current_page": 1,
+    "last_page": 10,
+    "total": 250,
+    "data": []
+  }
+}
+```
+
+## Publicacion a npm
+
+1. Login:
+
+```bash
+npm login
+npm whoami
+```
+
+2. Build:
+
+```bash
+npx ng build --project @doroteati/mia-table --configuration production
+```
+
+3. Publicar desde `dist`:
+
+```bash
+cd dist/doroteati/mia-table
+npm publish --access=public
+```
+
+Si publicas desde la raiz del workspace te saldra `EPRIVATE`, porque el `package.json` raiz es privado.
