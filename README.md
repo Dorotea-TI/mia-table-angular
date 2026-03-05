@@ -1,32 +1,44 @@
-# Dorotea
+# Mia Table Angular
 
-Libreria migrada a la version 15 de Angular
-migrada por Heider Hernandez [GitHub](https://github.com/HeiderHDev)
+Librería `@doroteati/mia-table` + app `example` en workspace multi-proyecto (Angular 21).
 
-# MiaTableAngular
+## Proyectos
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.
+- `@doroteati/mia-table` (library)
+- `example` (app con soporte SSR)
 
-## Development server
+## Nota importante de build
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Este workspace tiene más de un proyecto, por eso `ng build` o `npm run build` sin proyecto puede fallar con:
+`Cannot determine project for command`.
 
-## Code scaffolding
+Usa siempre el build por proyecto:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+# Build librería
+npx ng build @doroteati/mia-table --configuration production
 
-## Build
+# Build app example (browser + server SSR)
+npx ng build example --configuration production
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Desarrollo local
 
-## Running unit tests
+```bash
+# SPA (desarrollo)
+npx ng serve example
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# SSR (requiere build previo)
+npm run serve:ssr:example
+```
 
-## Running end-to-end tests
+## API local para example (sin CORS en SSR)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+El server SSR del `example` incluye proxy para `/auction/*` hacia `http://localhost` por defecto.
 
-## Further help
+Puedes cambiar el backend local así:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+# PowerShell
+$env:LOCAL_API_BASE="http://localhost:8080"; npm run serve:ssr:example
+```

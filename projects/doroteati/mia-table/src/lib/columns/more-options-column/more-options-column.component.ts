@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MoreColumnComponent } from '../more-column/more-column.component';
 
 @Component({
-  selector: 'mia-more-options-column',
-  templateUrl: './more-options-column.component.html',
-  styleUrls: ['./more-options-column.component.scss']
+    selector: 'mia-more-options-column',
+    templateUrl: './more-options-column.component.html',
+    styleUrls: ['./more-options-column.component.scss'],
+    standalone: false
 })
 export class MoreOptionsColumnComponent extends MoreColumnComponent implements OnInit {
 

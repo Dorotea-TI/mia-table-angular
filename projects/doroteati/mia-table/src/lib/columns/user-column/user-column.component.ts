@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { BaseColumnComponent } from '../base-column.component';
 
 @Component({
-  selector: 'mia-user-column',
-  templateUrl: './user-column.component.html',
-  styleUrls: ['./user-column.component.scss']
+    selector: 'mia-user-column',
+    templateUrl: './user-column.component.html',
+    styleUrls: ['./user-column.component.scss'],
+    standalone: false
 })
 export class UserColumnComponent extends BaseColumnComponent implements OnInit {
+  readonly fallbackAvatar = 'assets/img/user-avatar-empty.svg';
 
   constructor() {
     super();
@@ -41,6 +43,18 @@ export class UserColumnComponent extends BaseColumnComponent implements OnInit {
     }
 
     return '';
+  }
+
+  getSafePhoto() {
+    const photo = this.getPhoto();
+    return photo != '' ? photo : this.fallbackAvatar;
+  }
+
+  onImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    if (imgElement && imgElement.src.indexOf(this.fallbackAvatar) === -1) {
+      imgElement.src = this.fallbackAvatar;
+    }
   }
 
   getSubtitle() {

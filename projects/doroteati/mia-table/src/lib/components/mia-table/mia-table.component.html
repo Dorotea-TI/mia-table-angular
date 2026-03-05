@@ -10,7 +10,7 @@
 
 @if (_isLoading) {
   <div class="table-loading">
-    <mia-loading-squares [color]="config.loadingColor"></mia-loading-squares>
+    <mia-loading-squares [color]="config.loadingColor || '#1976d2'"></mia-loading-squares>
   </div>
 }
 

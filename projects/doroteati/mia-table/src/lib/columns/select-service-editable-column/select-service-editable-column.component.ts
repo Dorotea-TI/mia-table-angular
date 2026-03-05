@@ -8,9 +8,10 @@ import {
 } from '@doroteati/mia-core';
 
 @Component({
-  selector: 'mia-select-service-editable-column',
-  templateUrl: './select-service-editable-column.component.html',
-  styleUrls: ['./select-service-editable-column.component.scss'],
+    selector: 'mia-select-service-editable-column',
+    templateUrl: './select-service-editable-column.component.html',
+    styleUrls: ['./select-service-editable-column.component.scss'],
+    standalone: false
 })
 export class SelectServiceEditableColumnComponent
   extends BaseEditableColumnComponent

@@ -18,4 +18,5 @@ export class MiaColumn {
     field_key?: string | Array<string>;
     extra?: any;
     isShow?: boolean = true;
+    canHide?: boolean = true;
 }

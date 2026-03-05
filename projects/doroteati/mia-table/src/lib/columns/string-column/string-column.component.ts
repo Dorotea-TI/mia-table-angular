@@ -2,9 +2,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BaseColumnComponent } from '../base-column.component';
 
 @Component({
-  selector: 'mia-string-column',
-  templateUrl: './string-column.component.html',
-  styleUrls: ['./string-column.component.css']
+    selector: 'mia-string-column',
+    templateUrl: './string-column.component.html',
+    styleUrls: ['./string-column.component.css'],
+    standalone: false
 })
 export class StringColumnComponent extends BaseColumnComponent implements OnInit {
 

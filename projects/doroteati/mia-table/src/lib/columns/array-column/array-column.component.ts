@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { BaseColumnComponent } from '../base-column.component';
 
 @Component({
-  selector: 'mia-array-column',
-  templateUrl: './array-column.component.html',
-  styleUrls: ['./array-column.component.scss']
+    selector: 'mia-array-column',
+    templateUrl: './array-column.component.html',
+    styleUrls: ['./array-column.component.scss'],
+    standalone: false
 })
 export class ArrayColumnComponent extends BaseColumnComponent implements OnInit {
 

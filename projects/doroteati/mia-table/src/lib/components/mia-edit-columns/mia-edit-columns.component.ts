@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MiaTableConfig } from '../../entities/mia-table-config';
 import {
+  MiaTableColumnVisibility,
   MiaTableComponent,
   MIA_TABLE_KEY_STORAGE_COLUMNS,
 } from '../mia-table/mia-table.component';
@@ -8,9 +9,10 @@ import { StorageMap } from '@ngx-pwa/local-storage';
 import { MatSelectionListChange } from '@angular/material/list';
 
 @Component({
-  selector: 'mia-edit-columns',
-  templateUrl: './mia-edit-columns.component.html',
-  styleUrls: ['./mia-edit-columns.component.scss'],
+    selector: 'mia-edit-columns',
+    templateUrl: './mia-edit-columns.component.html',
+    styleUrls: ['./mia-edit-columns.component.scss'],
+    standalone: false
 })
 export class MiaEditColumnsComponent implements OnInit {
   @Input() config = new MiaTableConfig();
@@ -21,26 +23,45 @@ export class MiaEditColumnsComponent implements OnInit {
   ngOnInit(): void {}
 
   saveColumns() {
-    let data = new Array<boolean>();
+    const data: Array<MiaTableColumnVisibility> = [];
     for (const column of this.config.columns) {
-      data.push(column.isShow!);
+      data.push({
+        key: column.key,
+        isShow: !!column.isShow,
+      });
     }
 
     this.storage
       .set(MIA_TABLE_KEY_STORAGE_COLUMNS + this.config.id, data, {
         type: 'array',
-        items: { type: 'boolean' },
+        items: {
+          type: 'object',
+          properties: {
+            key: { type: 'string' },
+            isShow: { type: 'boolean' },
+          },
+          required: ['key', 'isShow'],
+        },
       })
-      .subscribe((result) => {});
+      .subscribe();
   }
 
   onChange(event: MatSelectionListChange) {
-    if (event.options[0].selected) {
-      event.options[0].value.isShow = true;
+    const changedColumn = event.options[0].value;
+    if (changedColumn.canHide === false) {
+      changedColumn.isShow = true;
     } else {
-      event.options[0].value.isShow = false;
+      changedColumn.isShow = event.options[0].selected;
     }
 
+    this.miaTable.processDisplayColumns();
+    this.saveColumns();
+  }
+
+  resetColumns() {
+    this.config.columns.forEach((column) => {
+      column.isShow = true;
+    });
     this.miaTable.processDisplayColumns();
     this.saveColumns();
   }

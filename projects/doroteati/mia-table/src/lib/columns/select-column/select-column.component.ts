@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { BaseColumnComponent } from '../base-column.component';
 
 @Component({
-  selector: 'lib-select-column',
-  templateUrl: './select-column.component.html',
-  styleUrls: ['./select-column.component.scss']
+    selector: 'lib-select-column',
+    templateUrl: './select-column.component.html',
+    styleUrls: ['./select-column.component.scss'],
+    standalone: false
 })
 export class SelectColumnComponent extends BaseColumnComponent implements OnInit {
 

@@ -4,10 +4,11 @@ import { MiaTableEditableConfig } from '../../entities/mia-table-editable-config
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'mia-table-editable',
-  templateUrl: './mia-table-editable.component.html',
-  styleUrls: ['./mia-table-editable.component.scss'],
-  animations: [TableAnimation.componentAnimation],
+    selector: 'mia-table-editable',
+    templateUrl: './mia-table-editable.component.html',
+    styleUrls: ['./mia-table-editable.component.scss'],
+    animations: [TableAnimation.componentAnimation],
+    standalone: false
 })
 export class MiaTableEditableComponent implements OnInit {
   @Input() config = new MiaTableEditableConfig();

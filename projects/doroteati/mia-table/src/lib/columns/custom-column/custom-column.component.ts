@@ -2,9 +2,10 @@ import { Component, ComponentFactoryResolver, ElementRef, OnInit, ViewChild, Vie
 import { BaseColumnComponent } from '../base-column.component';
 
 @Component({
-  selector: 'mia-custom-column',
-  templateUrl: './custom-column.component.html',
-  styleUrls: ['./custom-column.component.scss']
+    selector: 'mia-custom-column',
+    templateUrl: './custom-column.component.html',
+    styleUrls: ['./custom-column.component.scss'],
+    standalone: false
 })
 export class CustomColumnComponent extends BaseColumnComponent implements OnInit {
 

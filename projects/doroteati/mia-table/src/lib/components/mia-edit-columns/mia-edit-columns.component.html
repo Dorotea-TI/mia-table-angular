@@ -4,9 +4,10 @@
 
 <mat-menu #editColumnsMenu="matMenu" class="mat-menu-list">
   <div class="content" (click)="$event.stopPropagation()" [ngClass]="{'is-multiple-select': true}">
+    <button mat-button type="button" (click)="resetColumns()">Restablecer columnas</button>
     <mat-selection-list [multiple]="true" (selectionChange)="onChange($event)">
       @for (column of config.columns; track column) {
-        <mat-list-option [value]="column" [selected]="column.isShow">
+        <mat-list-option [value]="column" [selected]="column.isShow" [disabled]="column.canHide === false">
           @if (column.title == '' || column.title == undefined) {
             <span>{{ column.key }}</span>
           }

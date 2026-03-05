@@ -3,9 +3,10 @@ import { MiaTableConfig } from '../../entities/mia-table-config';
 import { BaseColumnComponent } from '../base-column.component';
 
 @Component({
-  selector: 'mia-icon-toggle-column',
-  templateUrl: './icon-toggle-column.component.html',
-  styleUrls: ['./icon-toggle-column.component.scss']
+    selector: 'mia-icon-toggle-column',
+    templateUrl: './icon-toggle-column.component.html',
+    styleUrls: ['./icon-toggle-column.component.scss'],
+    standalone: false
 })
 export class IconToggleColumnComponent extends BaseColumnComponent implements OnInit {
 

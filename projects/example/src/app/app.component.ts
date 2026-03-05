@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Subject } from 'rxjs';
-import { CustomOneColumnComponent } from './custom-one-column/custom-one-column.component';
 import { TestService } from './test.service';
 import {
   MiaColumn,
@@ -11,9 +11,10 @@ import {
 import { MiaPagination, MiaQuery } from '@doroteati/mia-core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit {
   @ViewChild('tableEditable') tableEditable!: MiaTableEditableComponent;
@@ -24,8 +25,11 @@ export class AppComponent implements OnInit {
   tableDataEditable: Array<any> = [];
 
   mockData?: MiaPagination<any>;
+  useMockData = false;
 
   queryScroll = new MiaQuery();
+  private platformId = inject(PLATFORM_ID);
+  isBrowser = isPlatformBrowser(this.platformId);
 
   constructor(public testService: TestService) {}
 
@@ -82,67 +86,72 @@ export class AppComponent implements OnInit {
           ],
         },
       },
-      {
-        key: 'vendor',
-        type: MiaColumn.TYPE_SELECT_SERVICE_EDITABLE,
-        field_key: 'vendor_id',
-        title: 'Vendor',
-        extra: {
-          service: this.testService,
-          field_display: 'title',
-          query: new MiaQuery(),
-        },
-      },
       { key: 'remove', type: MiaColumn.TYPE_REMOVE_EDITABLE, title: '' },
     ];
+
+    if (this.isBrowser) {
+      this.tableEditableConfig.columns.splice(
+        this.tableEditableConfig.columns.length - 1,
+        0,
+        {
+          key: 'vendor',
+          type: MiaColumn.TYPE_SELECT_SERVICE_EDITABLE,
+          field_key: 'vendor_id',
+          title: 'Vendor',
+          extra: {
+            service: this.testService,
+            field_display: 'title',
+            query: new MiaQuery(),
+          },
+        }
+      );
+    }
 
     this.tableEditableConfig.subject = new Subject<any>();
     this.tableEditableConfig.subject.subscribe((res) => {});
   }
 
   loadConfig() {
-    //this.tableConfig.service = this.testService;
+    this.tableConfig.service = this.testService;
     this.tableConfig.id = 'table-test';
+    this.tableConfig.query.itemPerPage = 25;
     this.tableConfig.columns = [
       { key: 'selection', type: 'selection', title: '' },
-      //{ key: 'id', type: 'string', title: 'ID', field_key: 'id' },
       {
-        key: 'item-role',
-        type: 'item-relation',
-        title: 'Role',
-        field_key: 'role_id',
-        extra: {
-          field_display: 'title',
-          field_relation_id: 'id',
-          service: this.testService,
-          query: new MiaQuery(),
-        },
-      },
-      { key: 'photo', type: 'photo', title: 'Photo', field_key: 'photo' },
-      {
-        key: 'custom',
-        type: 'custom',
-        title: 'Custom',
-        extra: { component: CustomOneColumnComponent },
+        key: 'id',
+        type: 'string',
+        title: 'ID',
+        field_key: 'id',
       },
       {
-        key: 'user',
-        type: 'user',
-        title: '# User',
-        extra: {
-          field_photo: 'photo',
-          field_firstname: 'firstname',
-          field_lastname: 'lastname',
-          field_subtitle: 'role',
-          field_is_online: 'is_online',
-        },
+        key: 'code',
+        type: 'string',
+        title: 'Codigo',
+        field_key: 'code',
       },
       {
         key: 'title',
         type: 'string',
         title: 'Titulo',
         field_key: 'title',
-        extra: { conditional_field: 'status' },
+      },
+      {
+        key: 'address',
+        type: 'text',
+        title: 'Direccion',
+        field_key: 'address',
+      },
+      {
+        key: 'city_id',
+        type: 'string',
+        title: 'Ciudad',
+        field_key: 'city_id',
+      },
+      {
+        key: 'current_price',
+        type: 'string',
+        title: 'Precio',
+        field_key: 'current_price',
       },
       {
         key: 'status',
@@ -151,14 +160,10 @@ export class AppComponent implements OnInit {
         field_key: 'status',
         extra: {
           options: [
-            { value: 0, title: 'Estado 1', color: 'warning' },
-            { value: 1, title: 'Estado 2', color: 'error' },
-            { value: 2, title: 'Estado 3', color: 'violet' },
-            { value: 3, title: 'Estado 4', color: 'success' },
-            { value: 4, title: 'Estado 5', color: 'blue' },
-            { value: 5, title: 'Estado 6', color: 'cyan' },
-            { value: 6, title: 'Estado 7', color: 'pink' },
-            { value: 7, title: 'Estado 8', color: '' },
+            { value: 1, title: 'Activo', color: 'success' },
+            { value: 6, title: 'Borrador', color: 'warning' },
+            { value: 9, title: 'No Activo', color: 'error' },
+            { value: 12, title: 'Pausado', color: 'violet' },
           ],
         },
       },
@@ -167,28 +172,6 @@ export class AppComponent implements OnInit {
         type: 'date',
         title: 'Created At',
         field_key: 'created_at',
-      },
-      {
-        key: 'icon',
-        type: 'icon-toggle',
-        title: '',
-        field_key: 'status',
-        extra: {
-          key_action: 'click-lock',
-          options: [
-            { value: 0, color: 'red', icon: 'lock' },
-            { value: 1, color: '#000', icon: 'lock-open' },
-          ],
-        },
-      },
-      {
-        key: 'array-example',
-        type: MiaColumn.TYPE_ARRAY,
-        title: 'Array',
-        extra: {
-          field_array_key: 'categories',
-          field_print_key: 'title',
-        },
       },
       {
         key: 'more',
@@ -206,14 +189,20 @@ export class AppComponent implements OnInit {
         key: 'more-option',
         type: MiaColumn.TYPE_MORE_OPTIONS,
         title: '',
-        field_key: 'role_id',
+        field_key: 'status',
         extra: {
           actions: {
-            1: [{ icon: 'create', title: 'Edit', key: 'edit' }],
-            4: [
+            1: [
               { icon: 'visibility', title: 'View', key: 'view' },
               { icon: 'create', title: 'Edit', key: 'edit' },
-              { icon: 'delete', title: 'Delete', key: 'remove' },
+            ],
+            6: [{ icon: 'create', title: 'Edit', key: 'edit' }],
+            9: [
+              { icon: 'visibility', title: 'View', key: 'view' },
+            ],
+            12: [
+              { icon: 'visibility', title: 'View', key: 'view' },
+              { icon: 'create', title: 'Edit', key: 'edit' },
             ],
           },
         },
@@ -230,71 +219,34 @@ export class AppComponent implements OnInit {
       console.log(result.key);
     });
 
-    this.mockData = {
-      current_page: 1,
-      first_page_url: '',
-      from: '',
-      last_page: 1,
-      last_page_url: '',
-      next_page_url: '',
-      path: '',
-      per_page: 50,
-      prev_page_url: '',
-      to: '',
-      total: 1,
-      data: [
-        {
-          id: 1,
-          role_id: 1,
-          title: 'asdasdasd',
-          firstname: 'Heider',
-          lastname: 'Hernandez',
-          photo:
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png',
-          subtitle: 'Administrador',
-          is_online: 0,
-          status: 1,
-          created_at: '1989-08-25 18:00:00',
-        },
-        {
-          id: 2,
-          role_id: 3,
-          title: 'asdasdasd',
-          firstname: 'Heider',
-          lastname: 'Hernandez',
-          photo:
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png',
-          subtitle: 'Administrador',
-          is_online: 0,
-          status: 1,
-          created_at: '1989-08-25 18:00:00',
-          categories: [{ title: 'category One' }, { title: 'category Two' }],
-        },
-        {
-          id: 3,
-          role_id: 1,
-          title: 'asdasdasd',
-          firstname: 'Heider',
-          lastname: 'Hernandez',
-          photo: '',
-          subtitle: 'Administrador',
-          is_online: 0,
-          created_at: '1989-08-25 18:00:00',
-        },
-        {
-          id: 4,
-          role_id: 4,
-          title: 'asdasdasd',
-          firstname: 'Heider',
-          lastname: 'Hernandez',
-          photo:
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png',
-          subtitle: 'Administrador',
-          is_online: 0,
-          status: 1,
-          created_at: '1989-08-25 18:00:00',
-        },
-      ],
-    };
+    if (this.useMockData) {
+      this.mockData = {
+        current_page: 1,
+        first_page_url: '',
+        from: '',
+        last_page: 1,
+        last_page_url: '',
+        next_page_url: '',
+        path: '',
+        per_page: 50,
+        prev_page_url: '',
+        to: '',
+        total: 1,
+        data: [
+          {
+            id: 882,
+            code: '350-6550',
+            title: 'LOTE EN IBAGUE - CENTRO CALLE 15',
+            address: 'Carrera 4 y calle 15 centro de Ibague',
+            city_id: 13,
+            current_price: 23000000000,
+            status: 1,
+            created_at: '2026-02-05T16:55:59.000000Z',
+          },
+        ],
+      };
+    } else {
+      this.mockData = undefined;
+    }
   }
 }

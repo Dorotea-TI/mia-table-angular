@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { BaseEditableColumnComponent } from '../base-editable-column.component';
 
 @Component({
-  selector: 'mia-select-editable-column',
-  templateUrl: './select-editable-column.component.html',
-  styleUrls: ['./select-editable-column.component.scss']
+    selector: 'mia-select-editable-column',
+    templateUrl: './select-editable-column.component.html',
+    styleUrls: ['./select-editable-column.component.scss'],
+    standalone: false
 })
 export class SelectEditableColumnComponent extends BaseEditableColumnComponent implements OnInit {
 

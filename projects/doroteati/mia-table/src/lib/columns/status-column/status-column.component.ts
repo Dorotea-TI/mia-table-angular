@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { BaseColumnComponent } from '../base-column.component';
 
 @Component({
-  selector: 'mia-status-column',
-  templateUrl: './status-column.component.html',
-  styleUrls: ['./status-column.component.scss']
+    selector: 'mia-status-column',
+    templateUrl: './status-column.component.html',
+    styleUrls: ['./status-column.component.scss'],
+    standalone: false
 })
 export class StatusColumnComponent extends BaseColumnComponent implements OnInit {
 

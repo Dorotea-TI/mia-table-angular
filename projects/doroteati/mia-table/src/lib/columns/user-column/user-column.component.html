@@ -1,9 +1,7 @@
 <div class="user-avatar-component">
-  @if (getPhoto() != '') {
-    <div class="avatar">
-      <img mat-card-avatar [src]="getPhoto()" alt="{{ getFullname() }}" class="cover-image" onerror="this.src='/assets/img/user-avatar-empty.svg';">
-    </div>
-  }
+  <div class="avatar">
+    <img mat-card-avatar [src]="getSafePhoto()" alt="{{ getFullname() }}" class="cover-image" (error)="onImageError($event)">
+  </div>
   <div class="texts">
     <div class="user"> {{ getFullname() }} </div>
     @if (getSubtitle() != '') {

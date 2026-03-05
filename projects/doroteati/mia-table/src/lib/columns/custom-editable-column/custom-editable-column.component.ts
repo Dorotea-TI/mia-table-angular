@@ -2,9 +2,10 @@ import { Component, ComponentFactoryResolver, ElementRef, OnInit, ViewChild, Vie
 import { BaseEditableColumnComponent } from '../base-editable-column.component';
 
 @Component({
-  selector: 'mia-custom-editable-column',
-  templateUrl: './custom-editable-column.component.html',
-  styleUrls: ['./custom-editable-column.component.scss']
+    selector: 'mia-custom-editable-column',
+    templateUrl: './custom-editable-column.component.html',
+    styleUrls: ['./custom-editable-column.component.scss'],
+    standalone: false
 })
 export class CustomEditableColumnComponent extends BaseEditableColumnComponent implements OnInit {
 

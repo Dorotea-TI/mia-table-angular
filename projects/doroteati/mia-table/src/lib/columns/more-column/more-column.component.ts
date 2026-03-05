@@ -3,9 +3,10 @@ import { MiaTableConfig } from '../../entities/mia-table-config';
 import { BaseColumnComponent } from '../base-column.component';
 
 @Component({
-  selector: 'mia-more-column',
-  templateUrl: './more-column.component.html',
-  styleUrls: ['./more-column.component.scss']
+    selector: 'mia-more-column',
+    templateUrl: './more-column.component.html',
+    styleUrls: ['./more-column.component.scss'],
+    standalone: false
 })
 export class MoreColumnComponent extends BaseColumnComponent implements OnInit {
   

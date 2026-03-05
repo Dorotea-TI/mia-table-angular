@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from "@angular/forms";
 import { BaseEditableColumnComponent } from '../base-editable-column.component';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
-  selector: 'mia-date-editable-column',
-  templateUrl: './date-editable-column.component.html',
-  styleUrls: ['./date-editable-column.component.scss']
+    selector: 'mia-date-editable-column',
+    templateUrl: './date-editable-column.component.html',
+    styleUrls: ['./date-editable-column.component.scss'],
+    standalone: false
 })
 export class DateEditableColumnComponent extends BaseEditableColumnComponent implements OnInit {
 

@@ -1,0 +1,51 @@
+:host {
+  display: block;
+  padding: 1rem 1.25rem 2rem;
+}
+
+h1 {
+  margin: 1.35rem 0 0.65rem;
+}
+
+.editable-actions {
+  margin-top: 0.85rem;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.page-btn {
+  min-width: 120px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.page-btn:hover {
+  transform: translateY(-1px);
+}
+
+.page-btn-primary {
+  background: #0f766e;
+  border-color: #0f766e;
+  color: #fff;
+}
+
+.page-btn-primary:hover {
+  background: #115e59;
+  border-color: #115e59;
+}
+
+.page-btn-secondary {
+  background: #fff;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.page-btn-secondary:hover {
+  background: #f8fafc;
+}

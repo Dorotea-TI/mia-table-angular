@@ -8,12 +8,17 @@ import { TableAnimation } from '../../animations/table-animation';
 import { MiaTableConfig } from '../../entities/mia-table-config';
 
 export const MIA_TABLE_KEY_STORAGE_COLUMNS = 'mia_table.columns_';
+export interface MiaTableColumnVisibility {
+  key: string;
+  isShow: boolean;
+}
 
 @Component({
-  selector: 'mia-table',
-  templateUrl: './mia-table.component.html',
-  styleUrls: ['./mia-table.component.scss'],
-  animations: [TableAnimation.componentAnimation],
+    selector: 'mia-table',
+    templateUrl: './mia-table.component.html',
+    styleUrls: ['./mia-table.component.scss'],
+    animations: [TableAnimation.componentAnimation],
+    standalone: false
 })
 export class MiaTableComponent implements OnInit {
   @Input() config = new MiaTableConfig();
@@ -32,6 +37,7 @@ export class MiaTableComponent implements OnInit {
   constructor(protected storage: StorageMap) {}
 
   ngOnInit(): void {
+    this.normalizeColumnsConfig();
     this.verifyIfSavedColumnsEdit();
     this.loadMocks();
     this.loadItems();
@@ -53,21 +59,31 @@ export class MiaTableComponent implements OnInit {
 
   loadWithObservable(serviceOb: Observable<MiaPagination<any>>) {
     this.setStartLoading();
-    serviceOb.subscribe((result) => {
-      this.dataItems = result;
-      this.processFirstLoad();
-      this.setEndLoading();
-      this.loadDataCompleted.emit(result);
+    serviceOb.subscribe({
+      next: (result) => {
+        this.dataItems = this.normalizePagination(result);
+        this.processFirstLoad();
+        this.setEndLoading();
+        this.loadDataCompleted.emit(this.dataItems);
+      },
+      error: () => {
+        this.setEndLoading();
+      },
     });
   }
 
   loadWithPromise(servicePromise: Observable<MiaPagination<any>>) {
     this.setStartLoading();
-    servicePromise.subscribe((result) => {
-      this.dataItems = result;
-      this.processFirstLoad();
-      this.setEndLoading();
-      this.loadDataCompleted.emit(result);
+    servicePromise.subscribe({
+      next: (result) => {
+        this.dataItems = this.normalizePagination(result);
+        this.processFirstLoad();
+        this.setEndLoading();
+        this.loadDataCompleted.emit(this.dataItems);
+      },
+      error: () => {
+        this.setEndLoading();
+      },
     });
   }
 
@@ -93,36 +109,83 @@ export class MiaTableComponent implements OnInit {
   }
 
   verifyIfSavedColumnsEdit() {
+    const storageKey = MIA_TABLE_KEY_STORAGE_COLUMNS + this.config.id;
     // Verify if has ID table
     if (this.config.id == undefined || this.config.id == '') {
-      this.showAllColumns();
+      this.processDisplayColumns();
       return;
     }
     // Verify if saved edit columns
     this.storage
-      .get<Array<boolean>>(MIA_TABLE_KEY_STORAGE_COLUMNS + this.config.id, {
-        type: 'array',
-        items: { type: 'boolean' },
-      })
-      .subscribe((result) => {
-        if (result == undefined) {
-          this.showAllColumns();
+      .get<Array<MiaTableColumnVisibility>>(
+        storageKey,
+        {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              key: { type: 'string' },
+              isShow: { type: 'boolean' },
+            },
+            required: ['key', 'isShow'],
+          },
+        }
+      )
+      .subscribe({
+        next: (result) => {
+        if (result != undefined) {
+          const visibilityMap = new Map<string, boolean>();
+          result.forEach((item) => visibilityMap.set(item.key, item.isShow));
+
+          // Current format: key-based storage to keep persistence if column order changes.
+          for (const column of this.config.columns) {
+            const persistedValue = visibilityMap.get(column.key);
+            if (persistedValue != undefined) {
+              column.isShow = persistedValue;
+            }
+          }
+          this.processDisplayColumns();
           return;
         }
-        console.log('--Storage--');
-        console.log(result);
 
-        if (result.length != this.config.columns.length) {
-          this.showAllColumns();
-          return;
-        }
+          // Legacy format: list of booleans by position.
+          this.storage
+          .get<Array<boolean>>(storageKey, {
+            type: 'array',
+            items: { type: 'boolean' },
+          })
+          .subscribe({
+            next: (legacyResult) => {
+              if (legacyResult == undefined) {
+                this.processDisplayColumns();
+                return;
+              }
 
-        for (let i = 0; i < result.length; i++) {
-          const isShow = result[i];
-          this.config.columns[i].isShow = isShow;
-        }
-
-        this.processDisplayColumns();
+              for (
+                let i = 0;
+                i < legacyResult.length && i < this.config.columns.length;
+                i++
+              ) {
+                this.config.columns[i].isShow = legacyResult[i];
+              }
+              this.processDisplayColumns();
+            },
+            error: () => {
+              // Corrupted/incompatible storage payload: clear and fallback to defaults.
+              this.storage.delete(storageKey).subscribe({
+                next: () => this.showAllColumns(),
+                error: () => this.showAllColumns(),
+              });
+            },
+          });
+        },
+        error: () => {
+        // Corrupted/incompatible storage payload: clear and fallback to defaults.
+        this.storage.delete(storageKey).subscribe({
+          next: () => this.showAllColumns(),
+          error: () => this.showAllColumns(),
+        });
+        },
       });
   }
 
@@ -131,6 +194,21 @@ export class MiaTableComponent implements OnInit {
       c.isShow = true;
     });
     this.processDisplayColumns();
+  }
+
+  normalizeColumnsConfig() {
+    this.config.columns.forEach((column: any) => {
+      // Backward compatibility with misspelled property "ishow".
+      if (column.isShow == undefined && typeof column.ishow === 'boolean') {
+        column.isShow = column.ishow;
+      }
+      if (column.isShow == undefined) {
+        column.isShow = true;
+      }
+      if (column.canHide == undefined) {
+        column.canHide = true;
+      }
+    });
   }
 
   processDisplayColumns() {
@@ -168,5 +246,17 @@ export class MiaTableComponent implements OnInit {
   setEndLoading() {
     this._isLoading = false;
     this.isLoading.emit(false);
+  }
+
+  protected normalizePagination(result: any): MiaPagination<any> {
+    if (result?.data && Array.isArray(result.data)) {
+      return result as MiaPagination<any>;
+    }
+
+    if (result?.response?.data && Array.isArray(result.response.data)) {
+      return result.response as MiaPagination<any>;
+    }
+
+    return new MiaPagination<any>();
   }
 }

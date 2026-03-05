@@ -3,10 +3,11 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { BaseColumnComponent } from '../base-column.component';
 
 @Component({
-  selector: 'mia-selection-column',
-  templateUrl: './selection-column.component.html',
-  styleUrls: ['./selection-column.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'mia-selection-column',
+    templateUrl: './selection-column.component.html',
+    styleUrls: ['./selection-column.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class SelectionColumnComponent extends BaseColumnComponent implements OnInit {
 

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { BaseColumnComponent } from 'projects/doroteati/mia-table/src/public-api';
 
 @Component({
-  selector: 'app-custom-one-column',
-  templateUrl: './custom-one-column.component.html',
-  styleUrls: ['./custom-one-column.component.scss'],
+    selector: 'app-custom-one-column',
+    templateUrl: './custom-one-column.component.html',
+    styleUrls: ['./custom-one-column.component.scss'],
+    standalone: false
 })
 export class CustomOneColumnComponent
   extends BaseColumnComponent

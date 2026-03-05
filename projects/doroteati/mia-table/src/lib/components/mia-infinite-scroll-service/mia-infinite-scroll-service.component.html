@@ -1,9 +1,11 @@
 <div class="mia-infinite-scroll-container">
-  @for (item of dataItems.data; track item) {
-    Item LOADED!!
-  }
+  <div class="infinite-scroll-summary">
+    Items loaded: {{ dataItems.data.length }}
+  </div>
 
   @if (isLoading || isFirstLoad) {
-    <div>Loading...</div>
+    <div class="table-loading">
+      <mia-loading-squares [color]="'#1976d2'"></mia-loading-squares>
+    </div>
   }
 </div>

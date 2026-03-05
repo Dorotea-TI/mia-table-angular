@@ -3,9 +3,10 @@ import { BaseColumnComponent } from '../base-column.component';
 import { MiaBaseCrudHttpService, MiaQuery } from '@doroteati/mia-core';
 
 @Component({
-  selector: 'mia-item-relation-column',
-  templateUrl: './item-relation-column.component.html',
-  styleUrls: ['./item-relation-column.component.scss'],
+    selector: 'mia-item-relation-column',
+    templateUrl: './item-relation-column.component.html',
+    styleUrls: ['./item-relation-column.component.scss'],
+    standalone: false
 })
 export class ItemRelationColumnComponent
   extends BaseColumnComponent

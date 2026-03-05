@@ -3,9 +3,10 @@ import { FormControl } from '@angular/forms';
 import { BaseEditableColumnComponent } from '../base-editable-column.component';
 
 @Component({
-  selector: 'mia-input-editable-column',
-  templateUrl: './input-editable-column.component.html',
-  styleUrls: ['./input-editable-column.component.scss']
+    selector: 'mia-input-editable-column',
+    templateUrl: './input-editable-column.component.html',
+    styleUrls: ['./input-editable-column.component.scss'],
+    standalone: false
 })
 export class InputEditableColumnComponent extends BaseEditableColumnComponent implements OnInit {
 

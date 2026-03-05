@@ -1,11 +1,15 @@
 import {
   AfterViewInit,
   Component,
+  DOCUMENT,
   ElementRef,
   HostListener,
   Input,
+  inject,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {
   MiaBaseCrudHttpService,
   MiaPagination,
@@ -13,9 +17,10 @@ import {
 } from '@doroteati/mia-core';
 
 @Component({
-  selector: 'mia-infinite-scroll-service',
-  templateUrl: './mia-infinite-scroll-service.component.html',
-  styleUrls: ['./mia-infinite-scroll-service.component.scss'],
+    selector: 'mia-infinite-scroll-service',
+    templateUrl: './mia-infinite-scroll-service.component.html',
+    styleUrls: ['./mia-infinite-scroll-service.component.scss'],
+    standalone: false
 })
 export class MiaInfiniteScrollServiceComponent implements OnInit {
   @Input() disabled: boolean = false;
@@ -26,10 +31,15 @@ export class MiaInfiniteScrollServiceComponent implements OnInit {
   isLoading = false;
   isFirstLoad = true;
   dataItems = new MiaPagination<any>();
+  private platformId = inject(PLATFORM_ID);
+  private document = inject(DOCUMENT);
 
   constructor(protected elementRef: ElementRef) {}
 
   ngOnInit(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
     this.loadMoreItems();
   }
 
@@ -49,28 +59,39 @@ export class MiaInfiniteScrollServiceComponent implements OnInit {
     this.isLoading = true;
     this.isFirstLoad = false;
     this.service.listOb(this.query).subscribe((res) => {
-      this.dataItems.data.push(res.data);
-      this.dataItems.current_page = res.current_page;
-      this.dataItems.last_page = res.last_page;
-      this.dataItems.total = res.total;
+      const pagination = this.normalizePagination(res);
+      this.dataItems.data.push(...pagination.data);
+      this.dataItems.current_page = pagination.current_page;
+      this.dataItems.last_page = pagination.last_page;
+      this.dataItems.total = pagination.total;
       this.isLoading = false;
     });
   }
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: any) {
-    console.log('onScroll');
-    if (this.isFullScreen) {
+    if (this.isFullScreen && isPlatformBrowser(this.platformId)) {
       const threshold = 50;
       const position = window.scrollY + window.innerHeight;
-      const height = document.body.scrollHeight;
+      const height = this.document.body.scrollHeight;
       const isBottom = position > height - threshold;
-      console.log('Scroll - ' + isBottom);
       if (isBottom) {
         this.loadMoreItems();
       }
     }
 
     //let params = this.elementRef.nativeElement.getBoundingClientRect();
+  }
+
+  protected normalizePagination(result: any): MiaPagination<any> {
+    if (result?.data && Array.isArray(result.data)) {
+      return result as MiaPagination<any>;
+    }
+
+    if (result?.response?.data && Array.isArray(result.response.data)) {
+      return result.response as MiaPagination<any>;
+    }
+
+    return new MiaPagination<any>();
   }
 }
