@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import { map } from 'rxjs/operators';
 import { BaseEditableColumnComponent } from '../base-editable-column.component';
 import {
@@ -11,7 +15,8 @@ import {
     selector: 'mia-select-service-editable-column',
     templateUrl: './select-service-editable-column.component.html',
     styleUrls: ['./select-service-editable-column.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatOptionModule]
 })
 export class SelectServiceEditableColumnComponent
   extends BaseEditableColumnComponent

@@ -1,11 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { BaseEditableColumnComponent } from '../base-editable-column.component';
 
 @Component({
     selector: 'mia-remove-editable-column',
     templateUrl: './remove-editable-column.component.html',
     styleUrls: ['./remove-editable-column.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [MatButtonModule]
 })
 export class RemoveEditableColumnComponent extends BaseEditableColumnComponent implements OnInit {
 

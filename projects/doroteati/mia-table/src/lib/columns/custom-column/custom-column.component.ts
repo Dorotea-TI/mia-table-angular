@@ -5,7 +5,7 @@ import { BaseColumnComponent } from '../base-column.component';
     selector: 'mia-custom-column',
     templateUrl: './custom-column.component.html',
     styleUrls: ['./custom-column.component.scss'],
-    standalone: false
+    standalone: true
 })
 export class CustomColumnComponent extends BaseColumnComponent implements OnInit {
 

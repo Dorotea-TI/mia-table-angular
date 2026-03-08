@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { MatChipsModule } from '@angular/material/chips';
 import { BaseColumnComponent } from '../base-column.component';
 
 @Component({
     selector: 'mia-status-column',
     templateUrl: './status-column.component.html',
     styleUrls: ['./status-column.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [MatChipsModule]
 })
 export class StatusColumnComponent extends BaseColumnComponent implements OnInit {
 

@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgStyle } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MiaTableConfig } from '../../entities/mia-table-config';
 import { BaseColumnComponent } from '../base-column.component';
 
@@ -6,7 +9,8 @@ import { BaseColumnComponent } from '../base-column.component';
     selector: 'mia-icon-toggle-column',
     templateUrl: './icon-toggle-column.component.html',
     styleUrls: ['./icon-toggle-column.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [NgStyle, MatButtonModule, MatIconModule]
 })
 export class IconToggleColumnComponent extends BaseColumnComponent implements OnInit {
 

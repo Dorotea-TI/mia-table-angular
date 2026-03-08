@@ -1,5 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BaseColumnComponent } from '../base-column.component';
 
 @Component({
@@ -7,7 +8,8 @@ import { BaseColumnComponent } from '../base-column.component';
     templateUrl: './selection-column.component.html',
     styleUrls: ['./selection-column.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: true,
+    imports: [MatCheckboxModule]
 })
 export class SelectionColumnComponent extends BaseColumnComponent implements OnInit {
 

@@ -6,7 +6,7 @@ import { BaseColumnComponent } from "./base-column.component";
 @Component({
     selector: 'mia-base-editable-column',
     template: '',
-    standalone: false
+    standalone: true
 })
 export class BaseEditableColumnComponent extends BaseColumnComponent {
     @Input() configEdit?: MiaTableEditableConfig;

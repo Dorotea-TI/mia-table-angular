@@ -5,7 +5,7 @@ import { BaseColumnComponent } from '../base-column.component';
     selector: 'lib-select-column',
     templateUrl: './select-column.component.html',
     styleUrls: ['./select-column.component.scss'],
-    standalone: false
+    standalone: true
 })
 export class SelectColumnComponent extends BaseColumnComponent implements OnInit {
 

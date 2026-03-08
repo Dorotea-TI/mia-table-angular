@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MiaTableConfig } from '../../entities/mia-table-config';
 import { BaseColumnComponent } from '../base-column.component';
 
@@ -6,7 +9,8 @@ import { BaseColumnComponent } from '../base-column.component';
     selector: 'mia-more-column',
     templateUrl: './more-column.component.html',
     styleUrls: ['./more-column.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [MatIconModule, MatButtonModule, MatMenuModule]
 })
 export class MoreColumnComponent extends BaseColumnComponent implements OnInit {
   

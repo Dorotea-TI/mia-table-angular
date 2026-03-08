@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from "@angular/forms";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { BaseEditableColumnComponent } from '../base-editable-column.component';
 import moment from 'moment';
 
@@ -7,7 +10,8 @@ import moment from 'moment';
     selector: 'mia-date-editable-column',
     templateUrl: './date-editable-column.component.html',
     styleUrls: ['./date-editable-column.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule]
 })
 export class DateEditableColumnComponent extends BaseEditableColumnComponent implements OnInit {
 

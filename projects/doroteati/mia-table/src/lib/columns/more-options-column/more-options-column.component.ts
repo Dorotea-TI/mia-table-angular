@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MoreColumnComponent } from '../more-column/more-column.component';
 
 @Component({
     selector: 'mia-more-options-column',
     templateUrl: './more-options-column.component.html',
     styleUrls: ['./more-options-column.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [MatIconModule, MatButtonModule, MatMenuModule]
 })
 export class MoreOptionsColumnComponent extends MoreColumnComponent implements OnInit {
 

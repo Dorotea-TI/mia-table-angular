@@ -1,36 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 /** Angular Material */
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatListModule } from '@angular/material/list';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   DateAdapter,
-  MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import {
   MatMomentDateModule,
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
 
-/** Others libraries */
-import { StorageModule } from '@ngx-pwa/local-storage';
+/** External libraries (needed for providers) */
 import { MiaCoreModule } from '@doroteati/mia-core';
-import { MiaLoadingModule } from '@doroteati/mia-loading';
 
 /** Components */
 import { MiaTableComponent } from './components/mia-table/mia-table.component';
@@ -63,11 +45,15 @@ import { TextColumnComponent } from './columns/text-column/text-column.component
 import { ArrayColumnComponent } from './columns/array-column/array-column.component';
 
 @NgModule({
-  declarations: [
+  imports: [
+    // External modules (provide MIA_CORE_PROVIDER needed by MiaBaseCrudHttpService)
+    MiaCoreModule,
+    MatMomentDateModule,
+
+    // Standalone components
     MiaTableComponent,
     MiaTableEditableComponent,
     MiaInfiniteScrollServiceComponent,
-
     BaseColumnComponent,
     StringColumnComponent,
     SelectionColumnComponent,
@@ -91,29 +77,6 @@ import { ArrayColumnComponent } from './columns/array-column/array-column.compon
     MoreOptionsColumnComponent,
     TextColumnComponent,
     ArrayColumnComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    StorageModule,
-    MiaCoreModule,
-    MiaLoadingModule,
-
-    // Angular Material
-    MatChipsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTableModule,
-    MatCheckboxModule,
-    MatMenuModule,
-    MatPaginatorModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatListModule,
-    MatDatepickerModule,
-    MatMomentDateModule,
   ],
   exports: [
     MatMomentDateModule,

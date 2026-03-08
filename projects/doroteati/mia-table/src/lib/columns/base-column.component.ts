@@ -5,7 +5,7 @@ import { MiaTableConfig } from "../entities/mia-table-config";
 @Component({
     selector: 'mia-base-column',
     template: '',
-    standalone: false
+    standalone: true
 })
 export class BaseColumnComponent {
     @Input() column: MiaColumn = new MiaColumn();

@@ -1,10 +1,28 @@
 import { SelectionModel } from '@angular/cdk/collections';
+import { NgClass } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 import { MiaPagination } from '@doroteati/mia-core';
+import { MiaLoadingModule } from '@doroteati/mia-loading';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { Observable } from 'rxjs';
 import { TableAnimation } from '../../animations/table-animation';
+import { ArrayColumnComponent } from '../../columns/array-column/array-column.component';
+import { CustomColumnComponent } from '../../columns/custom-column/custom-column.component';
+import { DateColumnComponent } from '../../columns/date-column/date-column.component';
+import { IconToggleColumnComponent } from '../../columns/icon-toggle-column/icon-toggle-column.component';
+import { ItemRelationColumnComponent } from '../../columns/item-relation-column/item-relation-column.component';
+import { MoreColumnComponent } from '../../columns/more-column/more-column.component';
+import { MoreOptionsColumnComponent } from '../../columns/more-options-column/more-options-column.component';
+import { PhotoColumnComponent } from '../../columns/photo-column/photo-column.component';
+import { SelectionColumnComponent } from '../../columns/selection-column/selection-column.component';
+import { StatusColumnComponent } from '../../columns/status-column/status-column.component';
+import { StringColumnComponent } from '../../columns/string-column/string-column.component';
+import { TextColumnComponent } from '../../columns/text-column/text-column.component';
+import { UserColumnComponent } from '../../columns/user-column/user-column.component';
 import { MiaTableConfig } from '../../entities/mia-table-config';
 
 export const MIA_TABLE_KEY_STORAGE_COLUMNS = 'mia_table.columns_';
@@ -18,7 +36,28 @@ export interface MiaTableColumnVisibility {
     templateUrl: './mia-table.component.html',
     styleUrls: ['./mia-table.component.scss'],
     animations: [TableAnimation.componentAnimation],
-    standalone: false
+    standalone: true,
+    imports: [
+        NgClass,
+        MiaLoadingModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatButtonModule,
+        MatIconModule,
+        SelectionColumnComponent,
+        StringColumnComponent,
+        PhotoColumnComponent,
+        UserColumnComponent,
+        DateColumnComponent,
+        MoreColumnComponent,
+        MoreOptionsColumnComponent,
+        StatusColumnComponent,
+        IconToggleColumnComponent,
+        CustomColumnComponent,
+        ItemRelationColumnComponent,
+        TextColumnComponent,
+        ArrayColumnComponent,
+    ],
 })
 export class MiaTableComponent implements OnInit {
   @Input() config = new MiaTableConfig();

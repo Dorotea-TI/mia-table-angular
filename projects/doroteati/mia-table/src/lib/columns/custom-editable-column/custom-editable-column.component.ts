@@ -5,7 +5,7 @@ import { BaseEditableColumnComponent } from '../base-editable-column.component';
     selector: 'mia-custom-editable-column',
     templateUrl: './custom-editable-column.component.html',
     styleUrls: ['./custom-editable-column.component.scss'],
-    standalone: false
+    standalone: true
 })
 export class CustomEditableColumnComponent extends BaseEditableColumnComponent implements OnInit {
 

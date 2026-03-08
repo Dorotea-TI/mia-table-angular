@@ -5,7 +5,7 @@ import { BaseColumnComponent } from '../base-column.component';
     selector: 'lib-filesize-column',
     templateUrl: './filesize-column.component.html',
     styleUrls: ['./filesize-column.component.scss'],
-    standalone: false
+    standalone: true
 })
 export class FilesizeColumnComponent extends BaseColumnComponent implements OnInit {
 

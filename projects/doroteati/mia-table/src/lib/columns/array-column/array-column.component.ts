@@ -5,7 +5,7 @@ import { BaseColumnComponent } from '../base-column.component';
     selector: 'mia-array-column',
     templateUrl: './array-column.component.html',
     styleUrls: ['./array-column.component.scss'],
-    standalone: false
+    standalone: true
 })
 export class ArrayColumnComponent extends BaseColumnComponent implements OnInit {
 

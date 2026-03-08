@@ -5,7 +5,7 @@ import { BaseColumnComponent } from '../base-column.component';
     selector: 'mia-photo-column',
     templateUrl: './photo-column.component.html',
     styleUrls: ['./photo-column.component.scss'],
-    standalone: false
+    standalone: true
 })
 export class PhotoColumnComponent extends BaseColumnComponent implements OnInit {
 

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { BaseColumnComponent } from '../base-column.component';
 
 @Component({
     selector: 'mia-user-column',
     templateUrl: './user-column.component.html',
     styleUrls: ['./user-column.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [MatIconModule]
 })
 export class UserColumnComponent extends BaseColumnComponent implements OnInit {
   readonly fallbackAvatar = 'assets/img/user-avatar-empty.svg';

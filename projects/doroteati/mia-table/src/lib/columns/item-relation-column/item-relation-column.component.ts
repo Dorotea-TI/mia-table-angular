@@ -6,7 +6,7 @@ import { MiaBaseCrudHttpService, MiaQuery } from '@doroteati/mia-core';
     selector: 'mia-item-relation-column',
     templateUrl: './item-relation-column.component.html',
     styleUrls: ['./item-relation-column.component.scss'],
-    standalone: false
+    standalone: true
 })
 export class ItemRelationColumnComponent
   extends BaseColumnComponent

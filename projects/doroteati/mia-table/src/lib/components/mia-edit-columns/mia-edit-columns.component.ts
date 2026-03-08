@@ -1,18 +1,27 @@
+import { NgClass } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule, MatSelectionListChange } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { MiaTableConfig } from '../../entities/mia-table-config';
 import {
   MiaTableColumnVisibility,
   MiaTableComponent,
   MIA_TABLE_KEY_STORAGE_COLUMNS,
 } from '../mia-table/mia-table.component';
-import { StorageMap } from '@ngx-pwa/local-storage';
-import { MatSelectionListChange } from '@angular/material/list';
 
 @Component({
     selector: 'mia-edit-columns',
     templateUrl: './mia-edit-columns.component.html',
     styleUrls: ['./mia-edit-columns.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [
+        MatMenuModule,
+        MatButtonModule,
+        MatListModule,
+        NgClass,
+    ],
 })
 export class MiaEditColumnsComponent implements OnInit {
   @Input() config = new MiaTableConfig();

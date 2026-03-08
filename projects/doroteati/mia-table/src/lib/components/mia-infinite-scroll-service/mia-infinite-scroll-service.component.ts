@@ -15,12 +15,16 @@ import {
   MiaPagination,
   MiaQuery,
 } from '@doroteati/mia-core';
+import { MiaLoadingModule } from '@doroteati/mia-loading';
 
 @Component({
     selector: 'mia-infinite-scroll-service',
     templateUrl: './mia-infinite-scroll-service.component.html',
     styleUrls: ['./mia-infinite-scroll-service.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [
+        MiaLoadingModule,
+    ],
 })
 export class MiaInfiniteScrollServiceComponent implements OnInit {
   @Input() disabled: boolean = false;
