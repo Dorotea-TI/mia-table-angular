@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "publish:lib": "ng build @doroteati/mia-table && cd dist/doroteati/mia-table && npm publish --access=public",
+    "publish:lib": "ng build @doroteati/mia-table --configuration production && cd dist/doroteati/mia-table && npm publish --access=public",
     "serve:example": "ng serve example",
     "serve:ssr:example": "node dist/example/server/server.mjs"
   },
